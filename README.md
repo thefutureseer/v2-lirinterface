@@ -1,2 +1,2 @@
 # lirinterface
-Language Interpretation and Recognition Interface
+*Language Interpretation and Recognition Interface*

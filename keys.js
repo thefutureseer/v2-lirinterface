@@ -1,9 +1,9 @@
 console.log("This is loaded");
 
-// exports.spotify = {
-//   id: 'f8587ba41adc4933a72eee1d6eade2e2',
-//   secret: 'cb18f68dfd434c90a374f523cb9a117b'
-// };
+exports.spotify = {
+  id: 'f8587ba41adc4933a72eee1d6eade2e2',
+  secret: 'cb18f68dfd434c90a374f523cb9a117b'
+};
 
 // twitter keys
 // var twitterKeys = {
@@ -13,7 +13,3 @@ console.log("This is loaded");
 //   access_token_secret: '0cPkgnYDw8FcUZ3Bx8ZXX9To850cCtayVlbFuaS1XeKuC',
 // }
 // module.exports = twitterKeys;
-
-
-
-//bands in town look at my own key and test it on my bandsInTown project.

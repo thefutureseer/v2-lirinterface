@@ -2,7 +2,7 @@
 const axios = require("axios");
 const Spotify = require("node-spotify-api");
 
-// var fs = require("fs");
+var fs = require("fs");
 
 require("dotenv").config();
 const keys = require("./keys");
@@ -54,10 +54,18 @@ function getBandsInTown(nameHere) {
 //this will take the comand from the comand line
 var choys = process.argv[2];
 for (var i in comds){
+  //write the choice to random text file
+  fs.writeFile("random.txt", " " + choys + " ", function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("Choice logged to the random text file");
+  });
   
   if (choys == comds[0]) {
     getBandsInTown(nameHere);
     console.log("Concert command goes here ____>")
+
   } else if (choys === comds[1]) {
     //spitify search query
       spotify.request("https://api.spotify.com/v1/tracks/7yCPwWs66K8Ba5lFuU2bcx")

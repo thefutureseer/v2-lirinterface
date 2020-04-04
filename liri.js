@@ -37,14 +37,23 @@ axios.get("https://rest.bandsintown.com/artists/" + nameHere + "?app_id=codingbo
   console.log(response);
   
 }).catch(error => {
-    console.log( error.response);
+
+
+  if (error.response) {
+//If the request was made and the server responded with a status code outside of 2xx
+    console.log( error.response.name);
+
+} else if (error.request) {
+//If request was made but no response was recieved. 
+//"Error.request" is an object that comes back with details pertaining to the error 
+   console.log(error.request);
+
+  } else {
+//If something happened when setting up the request that triggered the error
+    console.log("Error", error.message);
+  }
+  console.log(error.config);
+
   });
 }
-getBandsInTown(nameHere);
-
-//DELETE THIS AND USE AXIOS INSTEAD OF AJAX..
-
-//   fs.writeFile("random.txt", res, function(err) {
-//     if (err) { return console.log(err); }
-//   });
-  
+ getBandsInTown(nameHere);

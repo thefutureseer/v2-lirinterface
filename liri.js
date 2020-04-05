@@ -23,6 +23,7 @@ var comds = [
 ];
 
 var nameHere = process.argv[3];
+
 function getBandsInTown(nameHere) {
   // var keyurl = "?app_id=codingbootcamp";
   // var queryUrl = "https://rest.bandsintown.com/artists/" + nameHere + keyurl;
@@ -55,7 +56,7 @@ function getBandsInTown(nameHere) {
 var choys = process.argv[2];
 for (var i in comds){
   //write the choice to random text file
-  fs.writeFile("random.txt", " " + choys + " ", function(err) {
+  fs.appendFile("random.txt", " " + choys + " ", function(err) {
     if (err) {
       return console.log(err);
     }

@@ -1,8 +1,8 @@
 console.log("This is loaded");
 
 exports.spotify = {
-  id: 'f8587ba41adc4933a72eee1d6eade2e2',
-  secret: 'cb18f68dfd434c90a374f523cb9a117b'
+  id: process.env.SPOTIFY_ID,
+  secret: process.env.SPOTIFY_SECRET
 };
 
 // twitter keys

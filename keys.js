@@ -5,3 +5,6 @@ exports.spotify = {
   secret: process.env.SPOTIFY_SECRET
 };
 
+exports.bandsInTown = {
+  secret: process.env.BANDS_IN_TOWN_SECRET
+};

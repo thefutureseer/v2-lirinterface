@@ -1,51 +1,66 @@
 //liri app dependencies
-const axios = require("axios");
-const Spotify = require("node-spotify-api");
-var fs = require("fs");
+//Read and set environment variables
 require("dotenv").config();
+//Import Node Spotify Api
+const Spotify = require("node-spotify-api");
+//Import api keys
 const keys = require("./keys");
+//Import axios 
+const axios = require("axios");
+//Import File System
+//var fs = require("fs");
 
 //Spotify info
 var spotify = new Spotify(keys.spotify);
 
-//this will take the comand from the comand line
-var choys = process.argv[2];
-var nameHere = process.argv[3];
+//SPOTIFY
+var spotifyMe = function(songHere) {
 
-//all the commands to iterate through with a switch 
+ //spitify search query
+ spotify.search(
+   {
+     type: "track", 
+     query: songHere,
+     limit: 3
+   }, 
+   function(err, data) {
+      if (err) {
+        console.log("Error occurred" + err);
+        return;
+      }
 
-switch (choys) {
- case `concert-this`:
-  getBandsInTown();
-  break;
-  
- case `spotify-this-song`:
-  spotifyMe();
-   break;
-  
- case `movie-this`:
-   movieLookUp();
-  break;
+      var songs = data.tracks.items;
 
- case `do-what-it-says`:
-   doThis();
-   break;
+      for (var i = 0; i < songs.length; i++) {
+        //Artist name     
+//      console.log("Artist name "+ songs[i].artists);
+        //Song name
+        console.log("Song name "+ songs[i].name);
+        //Track number
+        console.log("Track number "+ songs[i].track_number);
+        //A preview link of the songs from Spotify
+        console.log("Album preview link to SPotify "+ songs[i].preview_url);
+        //The album that the songs is from
+        console.log("Album: " + songs[i].album.name);
+        //console.log(songs);
+      }  
+   }
+ );
 };
 
-
-
-function getBandsInTown(nameHere) {
+//BANDS IN TOWN
+function getBandsInTown(bandNameHere) {
   // var keyurl = "?app_id=codingbootcamp";
-  // var queryUrl = "https://rest.bandsintown.com/artists/" + nameHere + keyurl;
+  // var queryUrl = "https://rest.bandsintown.com/artists/" + bandNameHere + keyurl;
   
-  axios.get("https://rest.bandsintown.com/artists/" + nameHere + "?app_id=codingbootcamp").then(response => {
+  axios.get("https://rest.bandsintown.com/artists/" + bandNameHere + "?app_id=codingbootcamp").then(response => {
 
     // Name of the venue
-    console.log(response);
+     console.log(response);
     // Venue location
 
     // Date of the Event (use moment to format this as "MM/DD/YYYY")
-    
+
   }).catch(error => {
     
     
@@ -67,32 +82,28 @@ function getBandsInTown(nameHere) {
   });
 }
 
-function spotifyMe() {
-
-  //write the choice to random text file
-  fs.appendFile("random.txt", "Previously played " + nameHere + " ", function(err) {
-    if (err) {
-      return console.log(err);
-    }
-    console.log("Choice logged to the random text file");
-  });
+//all the commands to iterate through with a switch 
+var pick = function(choys, functionData) {
+  switch (choys) {
+    case `concert-this`:
+    getBandsInTown(functionData);
+    break;
+    
+    case `spotify-this-song`:
+    spotifyMe(functionData);
+      break;
+    
+    case `movie-this`:
+      movieLookUp(functionData);
+    break;
   
-    //spitify search query
-      spotify.request("https://api.spotify.com/v1/tracks/7yCPwWs66K8Ba5lFuU2bcx")
-       .then(function( data) {
-
-          //Artist name     
-          console.log("Artist name "+ data.name);
-          console.log("Track number "+ data.track_number);
-          // A preview link of the song from Spotify
-          console.log("Album preview link to SPotify "+ data.external_urls);
-          // The album that the song is from
-          //console.log(data.);
-
-
-     
-
-       }).catch(function(err) { 
-          console.error("Error occurred" + err);
-       });
+    case `do-what-it-says`:
+      doThis();
+      break;
+  };
 }
+ var runThis = function(argOne, argTwo) {
+  pick(argOne, argTwo)   
+ }
+
+ runThis(process.argv[2], process.argv.slice(3).join(" "));

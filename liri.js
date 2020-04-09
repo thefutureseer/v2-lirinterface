@@ -13,17 +13,26 @@ const axios = require("axios");
 //Spotify info
 var spotify = new Spotify(keys.spotify);
 
+//Helper function to help get the name of the artist
+var artistName = function(artist) {
+  return artist.name
+}
+
 //SPOTIFY
 var spotifyMe = function(songHere) {
+  //Check if user added an entry for spotify to find
+  
+  //spitify search query
+  spotify.search(
+    
+    {
+      type: "track", 
+      query: songHere ?  songHere : "The Sign",
+      limit: 3
+          
+    }, 
+    function(err, data) {
 
- //spitify search query
- spotify.search(
-   {
-     type: "track", 
-     query: songHere,
-     limit: 3
-   }, 
-   function(err, data) {
       if (err) {
         console.log("Error occurred" + err);
         return;
@@ -33,7 +42,7 @@ var spotifyMe = function(songHere) {
 
       for (var i = 0; i < songs.length; i++) {
         //Artist name     
-//      console.log("Artist name "+ songs[i].artists);
+        console.log("Artist name "+ songs[i].artists.map(artistName));
         //Song name
         console.log("Song name "+ songs[i].name);
         //Track number
@@ -42,6 +51,8 @@ var spotifyMe = function(songHere) {
         console.log("Album preview link to SPotify "+ songs[i].preview_url);
         //The album that the songs is from
         console.log("Album: " + songs[i].album.name);
+        // console.log(r/n);
+        console.log('---------------------------------------------------')
         //console.log(songs);
       }  
    }
@@ -53,17 +64,16 @@ function getBandsInTown(bandNameHere) {
   // var keyurl = "?app_id=codingbootcamp";
   // var queryUrl = "https://rest.bandsintown.com/artists/" + bandNameHere + keyurl;
   
-  axios.get("https://rest.bandsintown.com/artists/" + bandNameHere + "?app_id=codingbootcamp").then(response => {
+  axios.get("https://rest.bandsintown.com/artists/" + bandNameHere + "?app_id=codingbootcamp")
+   .then(response => {
 
     // Name of the venue
-     console.log(response);
+    console.log(response);
     // Venue location
-
+    console.log(response);
     // Date of the Event (use moment to format this as "MM/DD/YYYY")
-
-  }).catch(error => {
-    
-    
+    console.log(response);
+   }).catch(error => {
     if (error.response) {
       //If the request was made and the server responded with a status code outside of 2xx
       console.log( error.response.name);
@@ -77,8 +87,7 @@ function getBandsInTown(bandNameHere) {
       //If something happened when setting up the request that triggered the error
       console.log("Error", error.message);
     }
-    console.log(error.config);
-    
+     console.log(error.config);
   });
 }
 
@@ -86,12 +95,12 @@ function getBandsInTown(bandNameHere) {
 var pick = function(choys, functionData) {
   switch (choys) {
     case `concert-this`:
-    getBandsInTown(functionData);
+     getBandsInTown(functionData);
     break;
     
     case `spotify-this-song`:
-    spotifyMe(functionData);
-      break;
+     spotifyMe(functionData);
+    break;
     
     case `movie-this`:
       movieLookUp(functionData);
@@ -99,7 +108,7 @@ var pick = function(choys, functionData) {
   
     case `do-what-it-says`:
       doThis();
-      break;
+    break;
   };
 }
  var runThis = function(argOne, argTwo) {

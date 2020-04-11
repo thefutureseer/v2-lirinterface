@@ -13,7 +13,7 @@ const inquirer = require("inquirer")
 //Import moment for date
 const moment = require("moment");
 //Import File System
-//var fs = require("fs");
+var fs = require("fs");
 
 //Spotify info
 var spotify = new Spotify(keys.spotify);
@@ -115,10 +115,8 @@ const getContact = function() {
   ]).then(informa => {
     console.log(informa);
 
-
-
-  // // use a *inquirer* to ask for a name?
-  //
+  // // use inquirer to ask for a name
+  
   //Query for axios with Name inquiry
   //fake api for phone book:
    axios.get("https://jsonplaceholder.typicode.com/users/") 
@@ -141,13 +139,22 @@ const getContact = function() {
     });
 };
 
+//Function for "doWhatItSays"
+const doThis = function() {
+//Read the random text file
+fs.readFile("random.txt", "utf8", function(err, data) {
+  if (err) {
+    console.log(err)
+  } else {
 
-
-  // if (!movieHere.length) {
-  //   console.log("Please try another title")
-  // }
-
-//}
+//Get a command / text from random text file to add into spotify function
+    const randomTxt = data; 
+    
+//run spotify function with the text from random file
+spotifyMe(randomTxt);    
+  }
+})
+}
 
 //All the commands to iterate through with a switch
 var pick = function(choys, functionData) {

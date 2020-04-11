@@ -46,13 +46,13 @@ const spotifyMe = function(songHere) {
       for (var i = 0; i < songs.length; i++) {
         //Artist name
         var infoData = 
-        " Artist name: " + songs[i].artists.map(artistName) +
+        " Artist name: " + songs[i].artists.map(artistName) + os.EOL +
         //Song name
-        " Song name: " + songs[i].name + 
+        " Song name: " + songs[i].name + os.EOL + 
             //Track number
-        " Track number: " + songs[i].track_number +
+        " Track number: " + songs[i].track_number + os.EOL +
             //A preview link of the songs from Spotify
-        " Album preview link to SPotify: " + songs[i].preview_url +
+        " Album preview link to SPotify: " + songs[i].preview_url + os.EOL +
             //The album that the songs is from
         " Album: " + songs[i].album.name ;
 
@@ -63,7 +63,9 @@ const spotifyMe = function(songHere) {
           console.log(err)
         }
         });
-        console.log("-------------All logged to text file -------------- response text below ---------")
+        console.log("-------------All logged to text file -------------- response text below ---------");
+
+        //Show results in console with line breaks
         console.log(infoData.split(os.EOL));      
     }
    }

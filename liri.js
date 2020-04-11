@@ -14,6 +14,7 @@ const inquirer = require("inquirer")
 const moment = require("moment");
 //Import File System
 var fs = require("fs");
+var os = require("os");
 
 //Spotify info
 var spotify = new Spotify(keys.spotify);
@@ -40,22 +41,30 @@ const spotifyMe = function(songHere) {
       return;
     }
 
-    var songs = data.tracks.items;
+      var songs = data.tracks.items;
 
-    for (var i = 0; i < songs.length; i++) {
-      //Artist name
-      console.log("Artist name "+ songs[i].artists.map(artistName));
-      //Song name
-      console.log("Song name "+ songs[i].name);
-      //Track number
-      console.log("Track number "+ songs[i].track_number);
-      //A preview link of the songs from Spotify
-      console.log("Album preview link to SPotify "+ songs[i].preview_url);
-      //The album that the songs is from
-      console.log("Album: " + songs[i].album.name);
-      // console.log(r/n);
-      console.log('---------------------------------------------------')
-      //console.log(songs);
+      for (var i = 0; i < songs.length; i++) {
+        //Artist name
+        var infoData = 
+        " Artist name: " + songs[i].artists.map(artistName) +
+        //Song name
+        " Song name: " + songs[i].name + 
+            //Track number
+        " Track number: " + songs[i].track_number +
+            //A preview link of the songs from Spotify
+        " Album preview link to SPotify: " + songs[i].preview_url +
+            //The album that the songs is from
+        " Album: " + songs[i].album.name ;
+
+        //console.log(songs);
+        //Log data to a text file
+        fs.appendFile("log.txt", infoData + os.EOL, (err, res) => {
+        if (err) {
+          console.log(err)
+        }
+        });
+        console.log("-------------All logged to text file -------------- response text below ---------")
+        console.log(infoData.split(os.EOL));      
     }
    }
  );
@@ -96,11 +105,11 @@ const getBandsInTown = bandNameHere => {
       //"Error.request" is an object that comes back with details pertaining to the error
       console.log(error.request);
 
-     } else {
+    } else {
       //If something happened when setting up the request that triggered the error
       console.log("Error", error.message);
-   }
-      console.log(error.config);
+    }
+    console.log(error.config);
    });
 }
 
@@ -141,19 +150,19 @@ const getContact = function() {
 
 //Function for "doWhatItSays"
 const doThis = function() {
-//Read the random text file
-fs.readFile("random.txt", "utf8", function(err, data) {
-  if (err) {
-    console.log(err)
-  } else {
+  //Read the random text file
+  fs.readFile("random.txt", "utf8", (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
 
-//Get a command / text from random text file to add into spotify function
-    const randomTxt = data; 
-    
-//run spotify function with the text from random file
-spotifyMe(randomTxt);    
-  }
-})
+  //Get a command / text from random text file to add into spotify function
+      const randomTxt = data; 
+      
+  //run spotify function with the text from random file
+  spotifyMe(randomTxt);    
+    }
+  })
 }
 
 //All the commands to iterate through with a switch

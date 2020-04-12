@@ -13,17 +13,17 @@ const inquirer = require("inquirer")
 //Import moment for date
 const moment = require("moment");
 //Import File System
-var fs = require("fs");
-var os = require("os");
+const fs = require("fs");
+const os = require("os");
 
 //Spotify info
-var spotify = new Spotify(keys.spotify);
+const spotify = new Spotify(keys.spotify);
 
 //Helper function to help get the name of the artist
-var artistName = (artist) => artist.name;
+const artistName = artist => artist.name;
 
 //SPOTIFY
-const spotifyMe = function(songHere) {
+const spotifyMe = songHere => {
   //Check if user added an entry for spotify to find
 
   //spitify search query
@@ -42,27 +42,28 @@ const spotifyMe = function(songHere) {
     }
 
       var songs = data.tracks.items;
-
       for (var i = 0; i < songs.length; i++) {
-        //Artist name
-        var infoData = 
-        " Artist name: " + songs[i].artists.map(artistName) + os.EOL +
+        const song = songs[i];
+       //Artist name
+       var infoData = 
+        " Artist name: " + song.artists.map(artistName) + os.EOL +
         //Song name
-        " Song name: " + songs[i].name + os.EOL + 
+        " Song name: " + song.name + os.EOL + 
             //Track number
-        " Track number: " + songs[i].track_number + os.EOL +
+        " Track number: " + song.track_number + os.EOL +
             //A preview link of the songs from Spotify
-        " Album preview link to SPotify: " + songs[i].preview_url + os.EOL +
+        " Album preview link to SPotify: " + song.preview_url + os.EOL +
             //The album that the songs is from
-        " Album: " + songs[i].album.name ;
+        " Album: " + song.album.name ;
 
-        //console.log(songs);
-        //Log data to a text file
-        fs.appendFile("log.txt", infoData + os.EOL, (err, res) => {
+       //console.log(songs);
+       //Log data to a text file
+       fs.appendFile("log.txt", infoData + os.EOL, (err, res) => {
         if (err) {
           console.log(err)
         }
-        });
+
+       });
         console.log("-------------All logged to text file -------------- response text below ---------");
 
         //Show results in console with line breaks
@@ -75,10 +76,10 @@ const spotifyMe = function(songHere) {
 //BANDS IN TOWN
 const getBandsInTown = bandNameHere => {
 
-  var queryUrl = "https://rest.bandsintown.com/artists/" + bandNameHere + "/events?app_id=codingbootcamp";
+  const queryUrl = "https://rest.bandsintown.com/artists/" + bandNameHere + "/events?app_id=codingbootcamp";
   axios.get(queryUrl)
-   .then( function(response) {
-     var jsonData = response.data;
+   .then( response => {
+     const jsonData = response.data;
 
      if (!jsonData.length) {
        console.log("No results for " + bandNameHere);
@@ -86,14 +87,15 @@ const getBandsInTown = bandNameHere => {
      }
 
      for (var i = 0; i < jsonData.length; i++) {
-      var show = jsonData[i];
+      const show = jsonData[i];
        // Name of the city where venue is
-      console.log( show.venue.city + " "
-       //region or country and venue name.
-      + (show.venue.region || show.venue.country) + " at "
-      + show.venue.name +
-       // Date of show.(use moment to format this as "MM/DD/YYYY")
-      " Show Date: " + moment(show.datetime).format("MM/DD/YYYY") );
+      console.log( show.venue.city + os.EOL + " "
+        //region or country and venue name.
+        + (show.venue.region || show.venue.country) + " at "
+        + show.venue.name + os.EOL +
+        // Date of show.(use moment to format this as "MM/DD/YYYY")
+        " Show Date: " + moment(show.datetime).format("MM/DD/YYYY") + os.EOL
+      );
      }
    //end of first dot then statement  
    })
@@ -132,7 +134,7 @@ const getContact = function() {
   //fake api for phone book:
    axios.get("https://jsonplaceholder.typicode.com/users/") 
     .then(response => {
-    var answer = informa.Choice;      
+    const answer = informa.Choice;      
     const lupe = response.data;
 
       for (var i = 0; i < lupe.length; i++) {
@@ -168,7 +170,7 @@ const doThis = function() {
 }
 
 //All the commands to iterate through with a switch
-var pick = function(choys, functionData) {
+const pick = function(choys, functionData) {
   switch (choys) {
     case `concert-this`:
      getBandsInTown(functionData);
@@ -187,7 +189,7 @@ var pick = function(choys, functionData) {
     break;
   };
 }
- var runThis = function(argOne, argTwo) {
+ const runThis = function(argOne, argTwo) {
   pick(argOne, argTwo)
  }
 

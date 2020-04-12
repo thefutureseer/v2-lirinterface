@@ -17,6 +17,19 @@
   *  "moment": "^2.24.0",
   *  "node-spotify-api": "^1.1.1",
   *  "request": "^2.88.2"
+* Use built in SEARCH commands such as:
+
+  * _To search SPOTIFY:_
+     node liri.js spotify-this-song <Artist or Song name> + ENTER 
+ 
+  * _To search BANDSINTOWN.com_ 
+     node liri.js concert-this <Artist or Band name> + ENTER
+ 
+  * _To search a theoretical CONTACTS LIST_
+     node liri.js contact-list + ENTER scroll to the contact you want + ENTER 
+     
+  * _"Do what it says" will read from a text file and then search Spotify for that song_
+     node liri.js do-what-it-says + ENTER
 
 ## Where users can get help:
 Just drop me a line for any questions.
